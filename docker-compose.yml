@@ -1,0 +1,23 @@
+version: '3.7'
+
+services:
+  postgres:
+    image: postgres:11.1
+    volumes:
+      - postgres:/var/lib/postgresql/data
+      - ./log:/root/log:cached
+    ports:
+      - 5432:5432
+
+  rails:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    image: dock_app:1.0
+    tmpfs:
+      - /tmp
+    stdin_open: true
+    tty: true
+    command: bundle exec rails server -b 0.0.0.0
+    ports:
+      - 3000:3000
