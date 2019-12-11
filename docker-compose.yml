@@ -1,4 +1,4 @@
-version: '3.6'
+version: '3.7'
 
 services:
   postgres:
@@ -22,11 +22,11 @@ services:
     ports:
       - 3000:3000
     volumes:
-      - .:/app:cached
+      - packs:/app/public/packs
+      - node_modules:/app/node_modules
       - rails_cache:/app/tmp/cache
       - bundle:/bundle
-      - node_modules:/app/node_modules
-      - packs:/app/public/packs
+      - .:/app:cached
     environment:
       - NODE_ENV=development
       - RAILS_ENV=${RAILS_ENV:-development}
@@ -63,9 +63,9 @@ services:
       - WEBPACKER_DEV_SERVER_HOST=0.0.0.0
 
 
-  volumes:
-    postgres:
-    rails_cache:
-    node_modules:
-    bundle:
-    packs:
+volumes:
+  postgres:
+  rails_cache:
+  node_modules:
+  bundle:
+  packs:
